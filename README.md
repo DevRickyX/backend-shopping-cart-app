@@ -1,91 +1,73 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Croper Tech Test - Catálogo de productos
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Características principales
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Backend (API REST)
+- **Autenticación JWT**: Sistema seguro de autenticación
+- **CRUD de Productos**: Operaciones completas de gestión
+- **Base de Datos**: MongoDB con Mongoose
+- **Documentación API**: Swagger/OpenAPI integrado
+- **Validación**: Validación de datos con class-validator
+- **CORS**: Soporte para Cross-Origin Resource Sharing
 
-## Description
+### Frontend (Aplicación Web)
+- **Gestión de Productos**: Interfaz completa para CRUD
+- **Autenticación**: Sistema JWT integrado
+- **Búsqueda y Filtros**: Búsqueda en tiempo real
+- **Paginación**: Navegación eficiente de datos
+- **Diseño Responsivo**: Optimizado para móviles y desktop
+- **UI Moderna**: Componentes Radix UI con Tailwind CSS
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Stack Tecnológico
 
-## Local setup
+### Backend
+- **Lenguaje**: TypeScript
+- **Framework**: NestJS
+- **Base de Datos**: MongoDB 7.0
+- **ORM**: Mongoose
+- **Autenticación**: JWT con Passport
+- **Documentación**: Swagger/OpenAPI
 
-### Installation
+### Frontend
+- **Framework**: React / Next.js
+- **Lenguaje**: TypeScript
+- **Estilos**: Tailwind CSS v4
+- **Componentes**: Radix UI
+- **Estado**: Redux Toolkit
+- **Formularios**: React Hook Form + Zod
 
-```bash
-$ pnpm install
+## Estructura del Proyecto
+
+```
+croper-tech-test/
+├── backend/              # API REST con NestJS
+│   ├── src/
+│   │   ├── auth/        # Módulo de autenticación
+│   │   ├── products/    # Módulo de productos
+│   │   └── config/      # Configuración
+│   └── docker-compose.yml
+└── frontend/            # Aplicación Web
+    ├── app/             # Páginas (App Router)
+    ├── components/      # Componentes reutilizables
+    └── lib/            # Utilidades y configuración
 ```
 
-### Database configuration
+## Autenticación
 
-1. Create a copy of the provided environment template:
+El sistema utiliza autenticación JWT:
+1. Obtener token: `POST /api/auth/token`
+2. Usar token en headers: `Authorization: Bearer <token>`
 
-   ```bash
-   cp .env.example .env
-   ```
+## Diseño Responsivo
 
-2. Update the `DB_` variables to match your MySQL or MariaDB instance. If the
-   database is running on your host machine and the API is running inside a
-   container, remember to replace `127.0.0.1` with the reachable host (for
-   example `host.docker.internal`).
+La aplicación frontend está optimizada para:
+- **Desktop**: 1024px+
+- **Tablet**: 768px - 1023px
+- **Mobile**: < 768px
 
-3. Optionally adjust `DB_RETRY_ATTEMPTS` and `DB_RETRY_DELAY` if your database
-   takes a few seconds to become available.
+## Seguridad
 
-### Running the app
-
-```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- Autenticación JWT segura
+- Validación de datos en backend
+- Protección CORS configurable
+- Variables de entorno para configuración
