@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/store";
 import { authActions, authenticateUser } from "../lib/store/auth-slice";
 
@@ -6,49 +6,20 @@ export const useAuth = () => {
   const dispatch = useAppDispatch();
   const { token, user, isAuthenticated, isLoading, error, isInitialized } =
     useAppSelector((state) => state.auth);
-  const hasAttemptedAuth = useRef(false);
 
-  // Auto-authenticate on app start - only run once
+  // Initialize auth on mount - check localStorage for existing token
   useEffect(() => {
-    // First check if we have a token
     dispatch(authActions.initializeAuth());
   }, [dispatch]);
 
-  // Auto-authenticate if not authenticated - run when auth state changes
+  // Auto-authenticate on app start if no token exists
   useEffect(() => {
-    // Only attempt authentication if not authenticated, not loading, initialized, and not already attempted
-    if (
-      !isAuthenticated &&
-      !isLoading &&
-      isInitialized &&
-      !hasAttemptedAuth.current
-    ) {
-      hasAttemptedAuth.current = true;
+    // Wait for initialization, then auto-authenticate if not authenticated
+    if (isInitialized && !isAuthenticated && !isLoading && !token) {
+      // Automatically fetch token - no user interaction needed
       dispatch(authenticateUser());
     }
-  }, [isAuthenticated, isLoading, isInitialized, dispatch]);
-
-  // Reset the flag when authentication succeeds or fails
-  useEffect(() => {
-    if (isAuthenticated || error) {
-      hasAttemptedAuth.current = false;
-    }
-  }, [isAuthenticated, error]);
-
-  // Auto-refresh token logic
-  useEffect(() => {
-    if (isAuthenticated && token) {
-      // Check token expiration every hour
-      const interval = setInterval(() => {
-        // Check if token exists
-        if (!localStorage.getItem("auth_token")) {
-          dispatch(authActions.logout());
-        }
-      }, 60 * 60 * 1000); // Check every hour
-
-      return () => clearInterval(interval);
-    }
-  }, [isAuthenticated, token, dispatch]);
+  }, [isInitialized, isAuthenticated, isLoading, token, dispatch]);
 
   return {
     // State

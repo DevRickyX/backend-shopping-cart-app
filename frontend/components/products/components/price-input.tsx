@@ -13,20 +13,20 @@ import {
   isAllowedKeyCode,
 } from "../utils/currency-utils";
 import { UseFormReturn } from "react-hook-form";
-import { ProductFormData } from "../schemas/product-schema";
+import { ItemFormData } from "../../items/schemas/item-schema";
 
 interface PriceInputProps {
-  form: UseFormReturn<ProductFormData>;
+  form: UseFormReturn<ItemFormData>;
 }
 
 export const PriceInput: React.FC<PriceInputProps> = ({ form }) => {
   return (
     <FormField
       control={form.control}
-      name="precio"
+      name="price"
       render={({ field, fieldState }) => (
         <FormItem>
-          <FormLabel>Precio *</FormLabel>
+          <FormLabel>Price *</FormLabel>
           <FormControl>
             <Input
               type="text"

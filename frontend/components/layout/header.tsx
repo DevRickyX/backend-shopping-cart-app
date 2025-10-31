@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Button } from '../ui/button';
+import CartIcon from '../cart/cart-icon';
 
 export default function Header() {
   const pathname = usePathname();
@@ -13,26 +13,25 @@ export default function Header() {
     <header className="border-b bg-white border-dashed">
       <div className="container mx-auto py-4 px-4 md:px-0">
         <div className="flex items-center justify-between">
-          <Image
-            src="/croper.png"
-            alt="Croper"
-            width={120}
-            height={40}
-            className="hidden sm:block h-10 w-auto"
-            priority
-          />
+          <Link href="/">
+            <div className="text-xl font-bold">Shopping Cart App</div>
+          </Link>
           <div className="flex items-center justify-end gap-2">
-            <Button variant={pathname === "/products" ? "default" : "outline"}>
-              <Link href="/products">Productos</Link>
+            <Button
+              variant={pathname === '/items' ? 'default' : 'outline'}
+            >
+              <Link href="/items">Items</Link>
             </Button>
             <Button
-              variant={pathname === "/products/create" ? "default" : "outline"}
+              variant={pathname === '/items/create' ? 'default' : 'outline'}
             >
-              <Link href="/products/create">Crear producto</Link>
+              <Link href="/items/create">Create Item</Link>
             </Button>
+            <CartIcon />
           </div>
         </div>
       </div>
     </header>
   );
 }
+

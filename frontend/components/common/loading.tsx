@@ -12,7 +12,7 @@ interface LoadingProps {
 
 export default function Loading({
   size = "md",
-  text = "Cargando...",
+  text = "Loading...",
   className = "",
 }: LoadingProps) {
   const sizeClasses = {

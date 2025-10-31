@@ -4,13 +4,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { appConfig, validationSchema } from './config';
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
-import { ProductsModule } from './products/products.module';
+import { ItemsModule } from './items/items.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
     AuthModule,
     HealthModule,
-    ProductsModule,
+    ItemsModule,
+    CartModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [appConfig],

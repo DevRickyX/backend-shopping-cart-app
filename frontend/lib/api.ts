@@ -1,7 +1,4 @@
 import {
-  Product,
-  CreateProductDto,
-  UpdateProductDto,
   AuthToken,
   ApiError,
   RequestConfig,
@@ -84,10 +81,12 @@ class ApiClient {
       const data = await response.json();
 
       if (!response.ok) {
+        // Handle wrapped error response {data: {message: ..., status: ...}}
+        const errorData = data?.data || data;
         const error: ApiError = {
-          message: data.message || "An error occurred",
+          message: errorData.message || "An error occurred",
           status: response.status,
-          details: data.details || [],
+          details: errorData.details || [],
         };
 
         // Clear token if unauthorized
@@ -98,6 +97,14 @@ class ApiClient {
         throw error;
       }
 
+      // Handle wrapped response from TransformInterceptor {data: T}
+      // Unwrap it to return just the data
+      if (data && typeof data === 'object' && 'data' in data) {
+        console.log('Unwrapping response data:', data);
+        return data.data as T;
+      }
+
+      console.log('Returning unwrapped data:', data);
       return data;
     } catch (error) {
       if (error instanceof Error && error.name === "TypeError") {
@@ -119,34 +126,6 @@ class ApiClient {
     });
   }
 
-  // Products API
-  async getProducts(): Promise<Product[]> {
-    return this.request<Product[]>("/products");
-  }
-
-  async getProduct(id: string): Promise<Product> {
-    return this.request<Product>(`/products/${id}`);
-  }
-
-  async createProduct(product: CreateProductDto): Promise<Product> {
-    return this.request<Product>("/products", {
-      method: "POST",
-      body: product,
-    });
-  }
-
-  async updateProduct(id: string, product: UpdateProductDto): Promise<Product> {
-    return this.request<Product>(`/products/${id}`, {
-      method: "PUT",
-      body: product,
-    });
-  }
-
-  async deleteProduct(id: string): Promise<void> {
-    return this.request<void>(`/products/${id}`, {
-      method: "DELETE",
-    });
-  }
 }
 
 // Create API client instance

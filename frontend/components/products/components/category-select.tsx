@@ -14,7 +14,7 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
-import { ProductFormData } from "../schemas/product-schema";
+import { ItemFormData } from "../../items/schemas/item-schema";
 import {
   PRODUCT_CATEGORIES,
   NO_CATEGORY_VALUE,
@@ -22,20 +22,20 @@ import {
 } from "../constants/product-categories";
 
 interface CategorySelectProps {
-  form: UseFormReturn<ProductFormData>;
+  form: UseFormReturn<ItemFormData>;
 }
 
 export const CategorySelect: React.FC<CategorySelectProps> = ({ form }) => {
   return (
     <FormField
       control={form.control}
-      name="categoria"
+      name="category"
       render={({ field, fieldState }) => (
         <FormItem>
-          <FormLabel>Categoría</FormLabel>
+          <FormLabel>Category</FormLabel>
           <Select
             onValueChange={(value) => {
-              field.onChange(value);
+              field.onChange(value === NO_CATEGORY_VALUE ? undefined : value);
             }}
             value={field.value || NO_CATEGORY_VALUE}
           >
@@ -45,7 +45,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({ form }) => {
                   fieldState.error ? "border-destructive" : ""
                 }`}
               >
-                <SelectValue placeholder="Seleccionar categoría" />
+                <SelectValue placeholder="Select category" />
               </SelectTrigger>
             </FormControl>
             <SelectContent>

@@ -1,24 +1,113 @@
-// Product related types
-export interface Product {
+// Item related types
+export type ItemType = 'product' | 'event';
+
+export interface BaseItem {
   id: string;
-  nombre: string;
-  descripcion?: string;
-  precio: number;
-  categoria?: string;
+  type: ItemType;
+  name: string;
+  description?: string;
+  price: number;
+  thumbnail?: string;
+  stock: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface CreateProductDto {
-  nombre: string;
-  descripcion?: string;
-  precio: number;
-  categoria?: string;
+export interface ProductItem extends BaseItem {
+  type: 'product';
+  category?: string;
 }
 
-export interface UpdateProductDto {
-  nombre?: string;
-  descripcion?: string;
-  precio?: number;
-  categoria?: string;
+export interface EventItem extends BaseItem {
+  type: 'event';
+  eventDate?: Date;
+  location?: string;
+  capacity?: number;
+  startTime?: string;
+  endTime?: string;
+}
+
+export type Item = ProductItem | EventItem;
+
+export interface CreateItemDto {
+  type: ItemType;
+  name: string;
+  description?: string;
+  price: number;
+  thumbnail?: string;
+  stock: number;
+  // Product-specific
+  category?: string;
+  // Event-specific
+  eventDate?: string;
+  location?: string;
+  capacity?: number;
+  startTime?: string;
+  endTime?: string;
+}
+
+export interface UpdateItemDto {
+  type?: ItemType;
+  name?: string;
+  description?: string;
+  price?: number;
+  thumbnail?: string;
+  stock?: number;
+  // Product-specific
+  category?: string;
+  // Event-specific
+  eventDate?: string;
+  location?: string;
+  capacity?: number;
+  startTime?: string;
+  endTime?: string;
+}
+
+// Cart related types
+export interface CartItem {
+  itemId: string;
+  quantity: number;
+  // Cached item data for display
+  item?: Item;
+}
+
+export interface Cart {
+  items: CartItem[];
+  totalQuantity: number;
+  totalPrice: number;
+}
+
+export interface AddToCartDto {
+  itemId: string;
+  quantity: number;
+}
+
+export interface UpdateCartItemDto {
+  itemId: string;
+  quantity: number;
+}
+
+export interface CheckStockDto {
+  itemId: string;
+  quantity: number;
+}
+
+export interface CheckStockResponse {
+  available: boolean;
+  availableStock: number;
+  requestedQuantity: number;
+}
+
+export interface CartValidationDto {
+  items: Array<{
+    itemId: string;
+    quantity: number;
+  }>;
+}
+
+export interface CartValidationResponse {
+  isValid: boolean;
+  errors: string[];
 }
 
 // API Response types
@@ -70,25 +159,43 @@ export interface AuthState {
   isInitialized: boolean;
 }
 
-export interface ProductsState {
-  products: Product[];
-  selectedProduct: Product | null;
+export interface ItemsState {
+  items: Item[];
+  selectedItem: Item | null;
   loading: boolean;
   error: string | null;
   pagination: PaginationMeta;
 }
 
+export interface CartState {
+  items: CartItem[];
+  loading: boolean;
+  error: string | null;
+  lastValidated?: Date;
+}
+
 export interface RootState {
   auth: AuthState;
-  products: ProductsState;
+  items: ItemsState;
+  cart: CartState;
 }
 
 // Form types
-export interface ProductFormData {
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  categoria: string;
+export interface ItemFormData {
+  type: ItemType;
+  name: string;
+  description: string;
+  price: number;
+  thumbnail?: string;
+  stock: number;
+  // Product-specific
+  category?: string;
+  // Event-specific
+  eventDate?: string;
+  location?: string;
+  capacity?: number;
+  startTime?: string;
+  endTime?: string;
 }
 
 // UI Component types
@@ -99,39 +206,56 @@ export interface PaginationProps {
   className?: string;
 }
 
-export interface ProductTableProps {
-  products: Product[];
-  onEdit: (product: Product) => void;
+export interface ItemTableProps {
+  items: Item[];
+  onEdit: (item: Item) => void;
   onDelete: (id: string) => void;
   loading?: boolean;
 }
 
-export interface ProductFormProps {
-  product?: Product;
-  onSubmit: (data: ProductFormData) => Promise<void>;
+export interface ItemFormProps {
+  item?: Item;
+  onSubmit: (data: ItemFormData) => Promise<void>;
   onCancel: () => void;
   loading?: boolean;
 }
+
+// ItemFormData type from schema (description is optional)
+export type ItemFormDataFromSchema = {
+  type: ItemType;
+  name: string;
+  description?: string;
+  price: number;
+  thumbnail?: string;
+  stock: number;
+  category?: string;
+  eventDate?: string;
+  location?: string;
+  capacity?: number;
+  startTime?: string;
+  endTime?: string;
+};
 
 export interface DeleteDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  productName: string;
+  itemName: string;
   loading?: boolean;
 }
 
 // Filter and Sort types
-export interface ProductFilters {
+export interface ItemFilters {
   search?: string;
-  categoria?: string;
+  type?: ItemType;
+  category?: string;
   priceMin?: number;
   priceMax?: number;
   [key: string]: string | number | undefined;
 }
 
 export interface SortConfig {
-  field: keyof Product;
+  field: keyof BaseItem;
   direction: "asc" | "desc";
 }
 

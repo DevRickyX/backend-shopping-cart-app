@@ -65,7 +65,7 @@ export default function CustomPagination({
       className={`flex flex-col sm:flex-row items-center justify-between gap-4 ${className}`}
     >
       <div className="text-sm text-gray-700">
-        Mostrando {startItem} a {endItem} de {totalItems} resultados
+        Showing {startItem} to {endItem} of {totalItems} results
       </div>
 
       {totalPages > 1 ? (
@@ -128,7 +128,7 @@ export default function CustomPagination({
         </Pagination>
       ) : (
         <div className="text-sm text-gray-500">
-          Página {currentPage} de {totalPages}
+          Page {currentPage} of {totalPages}
         </div>
       )}
     </div>

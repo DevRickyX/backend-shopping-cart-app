@@ -16,7 +16,7 @@ interface DeleteDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  productName: string;
+  itemName: string;
   loading?: boolean;
 }
 
@@ -24,7 +24,7 @@ export default function DeleteDialog({
   isOpen,
   onClose,
   onConfirm,
-  productName,
+  itemName,
   loading,
 }: DeleteDialogProps) {
   return (
@@ -36,9 +36,9 @@ export default function DeleteDialog({
               <AlertTriangle className="h-5 w-5 text-red-600" />
             </div>
             <div>
-              <DialogTitle>Eliminar Producto</DialogTitle>
+              <DialogTitle>Delete Item</DialogTitle>
               <DialogDescription>
-                Esta acción no se puede deshacer.
+                This action cannot be undone.
               </DialogDescription>
             </div>
           </div>
@@ -46,8 +46,8 @@ export default function DeleteDialog({
 
         <div className="py-4">
           <p className="text-sm text-gray-600">
-            ¿Estás seguro de que quieres eliminar el producto{" "}
-            <span className="font-medium text-gray-900">&quot;{productName}&quot;</span>?
+            Are you sure you want to delete the item{' '}
+            <span className="font-medium text-gray-900">&quot;{itemName}&quot;</span>?
           </p>
         </div>
 
@@ -58,7 +58,7 @@ export default function DeleteDialog({
             disabled={loading}
             className="w-full sm:w-auto"
           >
-            Cancelar
+            Cancel
           </Button>
           <Button
             variant="destructive"
@@ -67,7 +67,7 @@ export default function DeleteDialog({
             className="w-full sm:w-auto"
           >
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Eliminar
+            Delete
           </Button>
         </DialogFooter>
       </DialogContent>

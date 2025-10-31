@@ -12,8 +12,8 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Croper test",
-  description: "Croper Tech Test - Sistema de gestión de productos",
+  title: "Shopping Cart App",
+  description: "Shopping Cart App - Manage items and shopping cart",
   authors: [
     { name: "David Silgado", url: "https://github.com/dsilgadosalcedo" },
   ],
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body className={`${geistSans.variable} antialiased`}>
         <ReduxProvider>
           <Header />
