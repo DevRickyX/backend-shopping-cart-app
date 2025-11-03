@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: "Shopping Cart App",
   description: "Shopping Cart App - Manage items and shopping cart",
   authors: [
-    { name: "David Silgado", url: "https://github.com/dsilgadosalcedo" },
+    { name: "Santiago Ricardo Ramirez", url: "https://github.com/DevRickyX" },
   ],
 };
 
